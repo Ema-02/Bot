@@ -7,7 +7,7 @@ from strings.filters import command
 from pyrogram.types import (Message,
 InlineKeyboardMarkup,InlineKeyboardButton)
 from typing import Union
-from AnonXMusic import app
+from YukkiMusic import app
 
 @app.on_message(command("ايما") & filters.group)
 async def bottttt(client, message):
