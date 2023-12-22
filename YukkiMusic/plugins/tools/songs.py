@@ -13,6 +13,7 @@ import re
 import yt_dlp
 from pykeyboard import InlineKeyboard
 from pyrogram import filters
+from strings.filters import command
 from pyrogram.types import (InlineKeyboardButton,
                             InlineKeyboardMarkup, InputMediaAudio,
                             InputMediaVideo, Message)
@@ -30,7 +31,7 @@ SONG_COMMAND = get_command("SONG_COMMAND")
 
 
 @app.on_message(
-    filters.command(SONG_COMMAND)
+    command(["/song","بحث","تحميل"])
     & filters.group
     & ~filters.edited
     & ~BANNED_USERS
@@ -54,7 +55,7 @@ async def song_commad_group(client, message: Message, _):
 
 
 @app.on_message(
-    filters.command(SONG_COMMAND)
+    command(["/song","بحث","تحميل"])
     & filters.private
     & ~filters.edited
     & ~BANNED_USERS
