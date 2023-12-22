@@ -19,6 +19,7 @@ from pytgcalls.exceptions import NoActiveGroupCall
 import config
 from config import BANNED_USERS, lyrical
 from strings import get_command
+from strings.filters import command
 from YukkiMusic import (Apple, Resso, SoundCloud, Spotify, Telegram,
                         YouTube, app)
 from YukkiMusic.core.call import Yukki
@@ -35,12 +36,30 @@ from YukkiMusic.utils.inline.playlist import botplaylist_markup
 from YukkiMusic.utils.logger import play_logs
 from YukkiMusic.utils.stream.stream import stream
 
+force_btn = InlineKeyboardMarkup(
+    [
+        [
+            InlineKeyboardButton(   
+              text=f"فَلسفة مشاعر.", url=f"t.me/cczza",)                        
+        ],        
+    ]
+)
+async def check_is_joined(message):    
+    try:
+        userid = message.from_user.id
+        user_name = message.from_user.first_name
+        status = await app.get_chat_member("cczza", userid)
+        return True
+    except Exception:
+        await message.reply_text(f'- عزيزي: {message.from_user.mention}\n- أشتࢪك في قناة البوت أولاً.\n- قناة البوت: @cczza 🧚‍♀',reply_markup=force_btn,disable_web_page_preview=False)
+        return False
+
 # Command
 PLAY_COMMAND = get_command("PLAY_COMMAND")
 
 
 @app.on_message(
-    filters.command(PLAY_COMMAND)
+    command(["تشغيل","/play"])
     & filters.group
     & ~filters.edited
     & ~BANNED_USERS
@@ -57,6 +76,8 @@ async def play_commnd(
     url,
     fplay,
 ):
+    if not await check_is_joined(message):
+        return
     mystic = await message.reply_text(
         _["play_2"].format(channel) if channel else _["play_1"]
     )
