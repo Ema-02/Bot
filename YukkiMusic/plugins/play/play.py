@@ -59,13 +59,13 @@ PLAY_COMMAND = get_command("PLAY_COMMAND")
 
 
 @app.on_message(
-    command(["تشغيل","/play","/cplay","/vpla","cvplay"])
+    command(["تشغيل", "/play", "/cplay", "/vplay"])
     & filters.group
     & ~filters.edited
     & ~BANNED_USERS
 )
 @PlayWrapper
-async def play_commnd(
+async def play(
     client,
     message: Message,
     _,
